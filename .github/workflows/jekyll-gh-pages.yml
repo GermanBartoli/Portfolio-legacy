@@ -1,50 +1,68 @@
-# Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: Deploy Jekyll with GitHub Pages dependencies preinstalled
-
+name: Validar y publicar en Cloudflare y GitHub Pages
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
+    branches: [main]
+  pull_request:
   workflow_dispatch:
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-# Allow one concurrent deployment
 concurrency:
-  group: "pages"
-  cancel-in-progress: true
-
+  group: publicacion-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
-  # Build job
-  build:
+  validar:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Pages
-        uses: actions/configure-pages@v2
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          source: ./
-          destination: ./_site
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-
-  # Deployment job
-  deploy:
+          node-version: 24
+      - name: Verificar y compilar
+        run: |
+          node scripts/build.mjs
+      - name: Preparar GitHub Pages
+        run: node scripts/preparar-github-pages.mjs Portfolio-legacy https://germanbartoli-portfolio-legacy.pages.dev
+      - name: Guardar compilación de Cloudflare
+        uses: actions/upload-artifact@v4
+        with:
+          name: cloudflare
+          path: dist
+          include-hidden-files: true
+      - name: Guardar compilación de GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist-github
+  cloudflare:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: validar
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: actions/download-artifact@v4
+        with:
+          name: cloudflare
+          path: dist
+      - name: Publicar en Cloudflare Pages
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=germanbartoli-portfolio-legacy --branch=main --commit-hash=${{ github.sha }}
+  github-pages:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: validar
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
     steps:
-      - name: Deploy to GitHub Pages
+      - uses: actions/configure-pages@v5
+      - name: Publicar en GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
