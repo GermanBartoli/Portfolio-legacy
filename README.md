@@ -1,4 +1,10 @@
 # Portfolio
+
+## Enlaces
+
+- [Sitio publicado en GitHub Pages](https://germanbartoli.github.io/Portfolio-legacy/)
+- [Repositorio en GitHub](https://github.com/GermanBartoli/Portfolio-legacy)
+
 ![Portfolio](https://github.com/bartoligerman497/Portfolio/assets/53313625/025f0c3b-62fa-4601-8aa8-36186c00771a)
 
 <!--
