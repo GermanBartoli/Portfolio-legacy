@@ -4,7 +4,7 @@
 
 [![Repositorio](https://img.shields.io/badge/GitHub-GermanBartoli-181717?logo=github)](https://github.com/GermanBartoli/Portfolio-legacy)
 
-[Empezar](#primeros-pasos) · [Mapa del repositorio](#mapa-del-repositorio) · [Autoría](#autoría-de-esta-documentación)
+[Abrir en Cloudflare](https://germanbartoli-portfolio-legacy.pages.dev/) · [Abrir en GitHub Pages](https://germanbartoli.github.io/Portfolio-legacy/) · [Empezar](#primeros-pasos) · [Mapa del repositorio](#mapa-del-repositorio) · [Autoría](#autoría-de-esta-documentación)
 
 ![Guía visual: Portfolio · Versión histórica](docs/readme/guia.svg)
 
