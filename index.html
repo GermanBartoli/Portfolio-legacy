@@ -71,7 +71,8 @@
 
 <body>
     <!-- ======= Mobile nav toggle button ======= -->
-    <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+    <a class="salto-contenido" href="#main">Saltar al contenido</a>
+    <button type="button" class="bi bi-list mobile-nav-toggle d-xl-none" aria-label="Men&#250; principal" aria-controls="header" aria-expanded="false"></button>
 
     <div id="mensaje">
         <p>Haz click en Aceptar para continuar</p>
@@ -195,13 +196,13 @@
                    style=" width: 250px; display: block; border-radius: 20px; margin: 0 auto; margin-top: 10px;">
                 <source src="assets/mp3/Gymnopedie.mp3" type="audio/mp3">
             </audio>
-            <span id="reproducirPausar" class='bx bx-play' style='font-size: 24px; color: #6f7180; margin-top: 10px; margin-left: 32px; cursor: pointer' alt="Reproducir" title="Reproducir"></span>
-            <span id="bajarVolumen" class='bx bx-volume-low' style='font-size: 24px; color: #6f7180; margin-top: 10px; cursor:pointer' alt="Bajar Volumen" title="Bajar Volumen"></span>
-            <span id="subirVolumen" class='bx bx-volume-full' style="font-size: 24px; color: #6f7180; margin-top: 10px; cursor: pointer " alt="Subir Volumen" title="Subir Volumen"></span>
-            <span id="silenciar" class='bx bx-volume-mute' style="font-size: 24px; color: #6f7180; margin-top: 10px; cursor: pointer " alt="Silenciar" title="Silenciar"></span>
-            <span id="reiniciar" class='bx bx-repeat' style="font-size: 24px; color: #6f7180; margin-top: 10px; cursor: pointer " alt="Reiniciar" title="Reiniciar"></span>
-            <span id="cancionAnterior" class='bx bx-skip-previous' style="font-size: 26px; color: #6f7180; margin-top: 10px; cursor: pointer " alt="Cancion Anterior" title="Cancion Anterior"></span>
-            <span id="cancionSiguiente" class='bx bx-skip-next' style="font-size: 26px; color: #6f7180; margin-top: 10px; cursor: pointer " alt="Cancion Siguiente" title="Cancion Siguiente"></span>
+            <button type="button" id="reproducirPausar" class='bx bx-play' style='font-size: 24px; color: #6f7180; margin-top: 10px; margin-left: 32px; cursor: pointer' title="Reproducir"></button>
+            <button type="button" id="bajarVolumen" class='bx bx-volume-low' style='font-size: 24px; color: #6f7180; margin-top: 10px; cursor:pointer' title="Bajar Volumen"></button>
+            <button type="button" id="subirVolumen" class='bx bx-volume-full' style="font-size: 24px; color: #6f7180; margin-top: 10px; cursor: pointer " title="Subir Volumen"></button>
+            <button type="button" id="silenciar" class='bx bx-volume-mute' style="font-size: 24px; color: #6f7180; margin-top: 10px; cursor: pointer " title="Silenciar"></button>
+            <button type="button" id="reiniciar" class='bx bx-repeat' style="font-size: 24px; color: #6f7180; margin-top: 10px; cursor: pointer " title="Reiniciar"></button>
+            <button type="button" id="cancionAnterior" class='bx bx-skip-previous' style="font-size: 26px; color: #6f7180; margin-top: 10px; cursor: pointer " title="Canción Anterior"></button>
+            <button type="button" id="cancionSiguiente" class='bx bx-skip-next' style="font-size: 26px; color: #6f7180; margin-top: 10px; cursor: pointer " title="Canción Siguiente"></button>
         </div>
         <br />
         <br />
@@ -224,7 +225,7 @@
     </section>
     <!-- End Hero -->
 
-    <main id="main">
+    <main id="main" tabindex="-1">
         <!-- ======= About Section ======= -->
         <section id="about"
                  class="about">
@@ -942,32 +943,14 @@
 
     });
 
-    function scrollToTop() {
-        return new Promise((resolve) => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth' // Desplazamiento suave
-            });
-
-            // Establecer un timeout para esperar el tiempo aproximado del desplazamiento
-            setTimeout(() => {
-                resolve(); // Resuelve la promesa cuando el scroll se espera que haya terminado
-            }, 1000); // Ajusta el tiempo si es necesario
-        });
-    }
-
     window.onload = function () {
         window.scrollTo(0, 0);
     };
 
     document.addEventListener('DOMContentLoaded', function () {
-        scrollToTop().then(() => {
-            disableScroll();
-            disableFocus(); // Deshabilitar el foco al cargar la página
-        });
-
-
-        //document.getElementById("aceptarBtnBienvenida").focus();
+        disableScroll();
+        disableFocus();
+        document.getElementById("aceptarBtnBienvenida").focus();
 
         document.getElementById("aceptarBtnBienvenida").addEventListener('click', aceptarBtnBienvenida);
 

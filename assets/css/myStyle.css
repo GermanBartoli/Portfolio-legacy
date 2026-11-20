@@ -62,3 +62,18 @@ span {
     opacity: 0.6; /* Cambia la opacidad para indicar que est� deshabilitado (opcional) */
     cursor: not-allowed; /* Cambia el cursor para indicar que est� deshabilitado (opcional) */
 }
+
+.salto-contenido {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 10000;
+  padding: 0.7rem 1rem;
+  transform: translateY(calc(-100% - 1rem));
+  background: #fff;
+  color: #151515;
+  border: 2px solid currentColor;
+}
+.salto-contenido:focus { transform: none; }
+.mobile-nav-toggle:focus-visible { outline: 3px solid #151515 !important; outline-offset: 2px; }
+#audio-player button { background: transparent; border: 0; padding: 0; }
