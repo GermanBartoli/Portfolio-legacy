@@ -751,21 +751,23 @@
                     </div>
 
                     <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-                        <form action="forms/contact.php"
+                        <form id="formulario-contacto"
+                              action="mailto:bartoligerman497@gmail.com"
+                              enctype="text/plain"
                               method="post"
                               class="php-email-form">
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label for="name">Your Name</label>
+                                    <label for="name">Tu nombre</label>
                                     <input type="text"
                                            name="name"
                                            class="form-control"
                                            id="name"
-                                           autocomplete="username"
+                                           autocomplete="name"
                                            required />
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="email">Your Email</label>
+                                    <label for="email">Tu correo</label>
                                     <input type="email"
                                            class="form-control"
                                            name="email"
@@ -775,7 +777,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="subject">Subject</label>
+                                <label for="subject">Asunto</label>
                                 <input type="text"
                                         class="form-control"
                                         name="subject"
@@ -783,19 +785,18 @@
                                         required />
                             </div>
                             <div class="form-group">
-                                <label for="message">Message</label>
+                                <label for="message">Mensaje</label>
                                 <textarea id="message"
                                         class="form-control"
                                         name="message"
                                         rows="10"
                                         required></textarea>
                             </div>
-                            <div class="my-3">
-                                <div class="loading">Loading</div>
-                                <div class="error-message"></div>
-                                <div class="sent-message">Your message has been sent. Thank you!</div>
+                            <p>Prepará el mensaje y revisalo en tu aplicación de correo antes de enviarlo.</p>
+                            <div class="text-center">
+                                <button type="submit">Preparar correo</button>
+                                <a id="borrador-contacto" hidden>Abrir borrador de correo</a>
                             </div>
-                            <div class="text-center"><button type="submit">Send Message</button></div>
                         </form>
                     </div>
                 </div>
@@ -836,7 +837,7 @@
     <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="assets/vendor/typed.js/typed.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/js/contacto.js"></script>
 
     <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
 

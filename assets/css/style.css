@@ -1145,3 +1145,11 @@ section {
 .portfolio-details .portfolio-info a {
   color: #076897;
 }
+
+#borrador-contacto:not([hidden]) {
+  display: block;
+  width: fit-content;
+  margin: 0.75rem auto 0;
+  color: #076897;
+  text-decoration: underline;
+}
