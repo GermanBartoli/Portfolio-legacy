@@ -22,44 +22,20 @@ function aceptarBtnBienvenida(event) {
 
 }
 
-const allFocusableElements = document.querySelectorAll('button, [href], input, select, textarea, audio[controls]');
-const originalTabIndices = new Map();
+const fondoBienvenida = [];
 
-// Función para deshabilitar el foco
 function disableFocus() {
-    allFocusableElements.forEach(element => {
-        if (element.id !== "aceptarBtnBienvenida") { // Ignorar el botón específico
-            originalTabIndices.set(element, element.getAttribute("tabindex")); // Guardar el tabindex original
-            element.tabIndex = -1; // Deshabilitar el foco
-        }
-    });
-
-    //const aceptarBtn = document.getElementById("aceptarBtnBienvenida"); // Obtener el botón específico
-    //if (aceptarBtn) {
-    //    aceptarBtn.tabIndex = 0; // Asegurarse de que el botón pueda recibir foco
-    //    aceptarBtn.focus(); // Enfocar el botón específico
-    //}
+    const bienvenida = document.getElementById("mensaje");
+    for (const elemento of document.body.children) {
+        if (elemento === bienvenida || elemento.inert || elemento.matches("script, style, link")) continue;
+        elemento.inert = true;
+        fondoBienvenida.push(elemento);
+    }
 }
 
-// Función para restaurar el foco
 function restoreFocus() {
-    for (const [elemento, indice] of originalTabIndices) {
-        if (indice === null) elemento.removeAttribute("tabindex");
-        else elemento.setAttribute("tabindex", indice);
-    }
+    for (const elemento of fondoBienvenida) elemento.inert = false;
+    fondoBienvenida.length = 0;
+    document.getElementById("mensaje").inert = true;
     document.querySelector(".salto-contenido").focus();
-
-    const aceptarBtn = document.getElementById("aceptarBtnBienvenida"); // Obtener el botón específico
-    if (aceptarBtn) {
-        aceptarBtn.tabIndex = -1; // Deshabilitar el foco en el botón
-    }
-
 }
-
-// evitar focus iframe
-const iframeGoogleMaps = document.querySelector('iframeGoogleMaps');
-iframeGoogleMaps.addEventListener('focus', (event) => {
-    event.preventDefault();
-    //document.querySelector('#otro-elemento').focus(); // Cambia '#otro-elemento' al selector del elemento que deseas enfocar
-});
-
