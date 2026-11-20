@@ -7,6 +7,27 @@
 (function() {
   "use strict";
 
+  const fondo = document.querySelector(".hero-video");
+  if (fondo) {
+    const movimiento = window.matchMedia("(prefers-reduced-motion: no-preference)");
+    const actualizarFondo = () => {
+      if (movimiento.matches) {
+        fondo.src = fondo.dataset.src;
+        fondo.play().catch(() => { fondo.hidden = true; });
+      } else {
+        fondo.hidden = true;
+        fondo.pause();
+        fondo.removeAttribute("src");
+        fondo.load();
+      }
+    };
+    fondo.addEventListener("playing", () => { fondo.hidden = !movimiento.matches; });
+    movimiento.addEventListener("change", actualizarFondo);
+    if (document.readyState === "complete") actualizarFondo();
+    else window.addEventListener("load", actualizarFondo, { once: true });
+  }
+
+
   /**
    * Easy selector helper function
    */
