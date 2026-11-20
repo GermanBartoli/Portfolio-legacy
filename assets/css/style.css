@@ -15,24 +15,7 @@ body {
     /*overflow-x: hidden;*/ /* Hide horizontal scrollbar */
 }
 
- /*General Scrollbar styling used on this site:*/
-::-webkit-scrollbar {
-    width: 0px;
-}
-
-::-webkit-scrollbar-track {
-    background-color: rgba(0, 0, 0, 0);
-    -webkit-border-radius: 20px;
-    /* border-radius: 20px; */
-    background-color: transparent; /* Color de la barra de desplazamiento */
-}
-
-::-webkit-scrollbar-thumb {
-    -webkit-border-radius: 20px;
-    border-radius: 20px;
-    background: rgb(54, 49, 49);
-    background-color: transparent; /* Color de la barra de desplazamiento */
-}  
+/* La barra usa las preferencias de tamaño y color del navegador. */
 
 a {
   color: #149ddd;
@@ -468,16 +451,24 @@ section {
   font-style: normal;
 }
 
-.skills .progress-bar-wrap {
-  background: #dce8f8;
+.skills meter {
+  display: block;
+  width: 100%;
   height: 10px;
 }
 
-.skills .progress-bar {
-  width: 1px;
-  height: 10px;
-  transition: 0.9s;
-  background-color: #149ddd;
+.skills meter::-webkit-meter-bar {
+  border: 0;
+  border-radius: 0;
+  background: #dce8f8;
+}
+
+.skills meter::-webkit-meter-optimum-value {
+  background: #149ddd;
+}
+
+.skills meter::-moz-meter-bar {
+  background: #149ddd;
 }
 
 /*--------------------------------------------------------------
