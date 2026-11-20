@@ -153,6 +153,8 @@ h6 {
 
 @media (max-width: 1199px) {
   #header {
+    transition-property: left;
+    visibility: hidden;
     left: -300px;
   }
 
@@ -240,6 +242,7 @@ h6 {
 }
 
 .mobile-nav-active #header {
+  visibility: visible;
   left: 0;
 }
 
