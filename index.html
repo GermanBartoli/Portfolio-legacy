@@ -83,7 +83,7 @@
     <header id="header">
         <div class="d-flex flex-column">
             <div class="profile">
-                <img src="assets/img/profile-img-menu.webp"
+                <img src="assets/img/profile-img.jpg"
                      alt=""
                      class="img-fluid rounded-circle"
                      style="
@@ -179,18 +179,17 @@
                             <i class="bx bx-envelope"></i> <span>Contact</span>
                         </a>
                     </li>
-                    <li id="music-li">
-                        <a href="#music"
-                           class="nav-link scrollto">
-                            <i class="bx bx-music"></i> <span>Music</span>
-                        </a>
+                    <li>
+                        <button id="control-musica" type="button" class="nav-link" aria-controls="audio-player" aria-expanded="false">
+                            <i class="bx bx-music" aria-hidden="true"></i> <span>Music</span>
+                        </button>
                     </li>
                 </ul>
             </nav>
             <!-- .nav-menu -->
         </div>
 
-        <div id="audio-player">
+        <div id="audio-player" inert>
             <audio id="miaudio"
                    controls autoplay loop
                    style=" width: 250px; display: block; border-radius: 20px; margin: 0 auto; margin-top: 10px;">
@@ -211,7 +210,6 @@
     <!-- ======= Hero Section ======= -->
     <section id="hero"
              class="d-flex flex-column align-items-center">
-        <video class="hero-video" data-src="img/Animation.mp4" aria-hidden="true" muted loop playsinline preload="none" hidden></video>
         <!--<section id="hero" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">-->
         <div class="hero-container"
              style="top:10%">
@@ -465,13 +463,10 @@
                      data-aos="fade-up">
                     <div class="col-lg-12 d-flex justify-content-center">
                         <ul id="portfolio-flters">
-                            <li data-filter="*"
-                                class="filter-active">
-                                All
-                            </li>
-                            <li data-filter=".filter-app">Projects</li>
-                            <li data-filter=".filter-Videos">Videos</li>
-                            <li data-filter=".filter-web">Blog</li>
+                            <li><button type="button" data-filter="*" aria-pressed="true">All</button></li>
+                            <li><button type="button" data-filter=".filter-app" aria-pressed="false">Projects</button></li>
+                            <li><button type="button" data-filter=".filter-Videos" aria-pressed="false">Videos</button></li>
+                            <li><button type="button" data-filter=".filter-web" aria-pressed="false">Blog</button></li>
                         </ul>
                     </div>
                 </div>
@@ -482,7 +477,7 @@
 
                     <div class="col-lg-4 col-md-6 portfolio-item filter-Videos filter-app">
                         <div class="portfolio-wrap">
-                            <img loading="lazy" decoding="async" width="1024" height="1024" src="assets/img/portfolio/adapter-miniatura.webp"
+                            <img loading="lazy" decoding="async" width="1024" height="1024" src="assets/img/portfolio/adapter.jpeg"
                                  class="img-fluid"
                                  alt="" />
                             <div class="portfolio-links">
@@ -504,7 +499,7 @@
 
                     <div class="col-lg-4 col-md-6 portfolio-item filter-Videos">
                         <div class="portfolio-wrap">
-                            <img loading="lazy" decoding="async" width="1920" height="1080" src="assets/img/portfolio/Optimizar-Internet-miniatura.webp"
+                            <img loading="lazy" decoding="async" width="1920" height="1080" src="assets/img/portfolio/Optimizar-Internet.jpg"
                                  class="img-fluid"
                                  alt="" />
                             <div class="portfolio-links">
@@ -520,7 +515,7 @@
 
                     <div class="col-lg-4 col-md-6 portfolio-item filter-app">
                         <div class="portfolio-wrap">
-                            <img loading="lazy" decoding="async" width="1920" height="1080" src="assets/img/portfolio/Introduction-MySQL-Platzi-miniatura.webp"
+                            <img loading="lazy" decoding="async" width="1920" height="1080" src="assets/img/portfolio/Introduction-MySQL-Platzi.jpg"
                                  class="img-fluid"
                                  alt="" />
                             <div class="portfolio-links">
@@ -542,7 +537,7 @@
 
                     <div class="col-lg-4 col-md-6 portfolio-item filter-app">
                         <div class="portfolio-wrap">
-                            <img loading="lazy" decoding="async" width="1920" height="1080" src="assets/img/portfolio/Academic-System-DevSpirit-miniatura.webp"
+                            <img loading="lazy" decoding="async" width="1920" height="1080" src="assets/img/portfolio/Academic-System-DevSpirit.jpg"
                                  class="img-fluid"
                                  alt="" />
                             <div class="portfolio-links">
@@ -564,7 +559,7 @@
 
                     <div class="col-lg-4 col-md-6 portfolio-item filter-app">
                         <div class="portfolio-wrap">
-                            <img loading="lazy" decoding="async" width="1920" height="1080" src="assets/img/portfolio/Bootstrap4-Course-Platzi-miniatura.webp"
+                            <img loading="lazy" decoding="async" width="1920" height="1080" src="assets/img/portfolio/Bootstrap4-Course-Platzi.png"
                                  class="img-fluid"
                                  alt="" />
                             <div class="portfolio-links">
@@ -618,7 +613,7 @@
 
                     <div class="col-lg-4 col-md-6 portfolio-item filter-app">
                         <div class="portfolio-wrap">
-                            <img loading="lazy" decoding="async" width="1907" height="1063" src="assets/img/portfolio/UTN-Academy-miniatura.webp"
+                            <img loading="lazy" decoding="async" width="1907" height="1063" src="assets/img/portfolio/UTN-Academy.png"
                                  class="img-fluid"
                                  alt="" />
                             <div class="portfolio-links">
@@ -634,7 +629,7 @@
 
                     <div class="col-lg-4 col-md-6 portfolio-item filter-app">
                         <div class="portfolio-wrap">
-                            <img loading="lazy" decoding="async" width="1920" height="1080" src="assets/img/portfolio/image18-miniatura.webp"
+                            <img loading="lazy" decoding="async" width="1920" height="1080" src="assets/img/portfolio/image18.png"
                                  class="img-fluid"
                                  alt="" />
                             <div class="portfolio-links">
@@ -911,15 +906,6 @@
 
         document.getElementById("aceptarBtnBienvenida").addEventListener('click', aceptarBtnBienvenida);
 
-        var audioPlayer = document.getElementById('audio-player');
-        //audioPlayer.style.display = 'none'; // Ocultar el reproductor de audio al cargar el DOM
-
-        var elementosHijos = audioPlayer.querySelectorAll('*'); // Seleccionar todos los elementos hijos
-
-        elementosHijos.forEach(function (elemento) {
-            elemento.style.pointerEvents = 'none'; // Deshabilitar elementos hijos
-        });
-
         audio = document.getElementById("miaudio");
 
         audio.volume = 0.60;
@@ -1091,23 +1077,12 @@
         }
     });
 
-    document.getElementById('music-li').addEventListener('click', function (event) {
-        event.preventDefault(); // Evita que el enlace se comporte normalmente
-
-        var audioPlayer = document.getElementById('audio-player');
-        var elementosHijos = audioPlayer.querySelectorAll('*'); // Seleccionar todos los elementos hijos
-
-        if (audioPlayer.classList.contains('show')) {
-            audioPlayer.classList.remove('show'); // Si está visible, lo oculta
-            elementosHijos.forEach(function (elemento) {
-                elemento.style.pointerEvents = 'none'; // Deshabilitar elementos hijos
-            });
-        } else {
-            audioPlayer.classList.add('show'); // Si está oculto, lo muestra
-            elementosHijos.forEach(function (elemento) {
-                elemento.style.pointerEvents = 'auto'; // Habilitar elementos hijos
-            });
-        }
+    const controlMusica = document.getElementById('control-musica');
+    controlMusica.addEventListener('click', () => {
+        const reproductor = document.getElementById('audio-player');
+        const abierto = reproductor.classList.toggle('show');
+        reproductor.inert = !abierto;
+        controlMusica.setAttribute('aria-expanded', String(abierto));
     });
 
     // Tareas

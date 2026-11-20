@@ -7,26 +7,13 @@
 (function() {
   "use strict";
 
-  const fondo = document.querySelector(".hero-video");
-  if (fondo) {
-    const movimiento = window.matchMedia("(prefers-reduced-motion: no-preference)");
-    const actualizarFondo = () => {
-      if (movimiento.matches) {
-        fondo.src = fondo.dataset.src;
-        fondo.play().catch(() => { fondo.hidden = true; });
-      } else {
-        fondo.hidden = true;
-        fondo.pause();
-        fondo.removeAttribute("src");
-        fondo.load();
-      }
-    };
-    fondo.addEventListener("playing", () => { fondo.hidden = !movimiento.matches; });
-    movimiento.addEventListener("change", actualizarFondo);
-    if (document.readyState === "complete") actualizarFondo();
-    else window.addEventListener("load", actualizarFondo, { once: true });
+  const movimiento = window.matchMedia("(prefers-reduced-motion: no-preference)");
+  const portada = document.getElementById("hero");
+  if (portada) {
+    const iniciarFondo = () => { portada.dataset.animacion = ""; };
+    if (document.readyState === "complete") iniciarFondo();
+    else window.addEventListener("load", iniciarFondo, { once: true });
   }
-
 
   /**
    * Easy selector helper function
@@ -88,7 +75,7 @@
     let elementPos = select(el).offsetTop
     window.scrollTo({
       top: elementPos,
-      behavior: 'smooth'
+      behavior: movimiento.matches ? 'smooth' : 'instant'
     })
   }
 
@@ -153,15 +140,18 @@
    */
   const typed = select('.typed')
   if (typed) {
-    let typed_strings = typed.getAttribute('data-typed-items')
-    typed_strings = typed_strings.split(',')
-    new Typed('.typed', {
-      strings: typed_strings,
-      loop: true,
-      typeSpeed: 100,
-      backSpeed: 50,
-      backDelay: 2000
-    });
+    const textos = typed.getAttribute('data-typed-items').split(',').map(texto => texto.trim());
+    let escritura;
+    const actualizarTexto = () => {
+      escritura?.destroy();
+      escritura = undefined;
+      typed.textContent = movimiento.matches ? '' : textos[0];
+      if (movimiento.matches) {
+        escritura = new Typed(typed, { strings: textos, loop: true, typeSpeed: 100, backSpeed: 50, backDelay: 2000 });
+      }
+    };
+    actualizarTexto();
+    movimiento.addEventListener('change', actualizarTexto);
   }
 
   /**
@@ -174,14 +164,14 @@
         itemSelector: '.portfolio-item'
       });
 
-      let portfolioFilters = select('#portfolio-flters li', true);
+      let portfolioFilters = select('#portfolio-flters button', true);
 
-      on('click', '#portfolio-flters li', function(e) {
+      on('click', '#portfolio-flters button', function(e) {
         e.preventDefault();
         portfolioFilters.forEach(function(el) {
-          el.classList.remove('filter-active');
+          el.setAttribute('aria-pressed', 'false');
         });
-        this.classList.add('filter-active');
+        this.setAttribute('aria-pressed', 'true');
 
         portfolioIsotope.arrange({
           filter: this.getAttribute('data-filter')
@@ -204,7 +194,7 @@
   /**
    * Portfolio details slider
    */
-  new Swiper('.portfolio-details-slider', {
+  const detalles = new Swiper('.portfolio-details-slider', {
     speed: 400,
     loop: true,
     autoplay: {
@@ -221,7 +211,7 @@
   /**
    * Testimonials slider
    */
-  new Swiper('.testimonials-slider', {
+  const testimonios = new Swiper('.testimonials-slider', {
     speed: 600,
     loop: true,
     autoplay: {
@@ -246,6 +236,18 @@
       }
     }
   });
+
+  for (const carrusel of [detalles, testimonios]) {
+    if (!carrusel.el) continue;
+    const velocidad = carrusel.params.speed;
+    const actualizarCarrusel = () => {
+      carrusel.params.speed = movimiento.matches ? velocidad : 0;
+      if (movimiento.matches) carrusel.autoplay.start();
+      else carrusel.autoplay.stop();
+    };
+    actualizarCarrusel();
+    movimiento.addEventListener('change', actualizarCarrusel);
+  }
 
   /**
    * Animation on scroll
