@@ -37,5 +37,12 @@ function restoreFocus() {
     for (const elemento of fondoBienvenida) elemento.inert = false;
     fondoBienvenida.length = 0;
     document.getElementById("mensaje").inert = true;
-    document.querySelector(".salto-contenido").focus();
+    const destino = document.getElementById(location.hash.slice(1));
+    if (destino && destino.matches('main, section')) {
+        destino.tabIndex = -1;
+        destino.focus({ preventScroll: true });
+        destino.scrollIntoView({ block: 'start', behavior: 'instant' });
+    } else {
+        document.querySelector(".salto-contenido").focus();
+    }
 }

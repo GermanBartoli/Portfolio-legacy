@@ -191,10 +191,10 @@
 
         <div id="audio-player" inert>
             <audio id="miaudio"
-                   controls autoplay loop
+                   src="assets/mp3/Gymnopedie.mp3" preload="none" controls loop
                    style=" width: 250px; display: block; border-radius: 20px; margin: 0 auto; margin-top: 10px;">
-                <source src="assets/mp3/Gymnopedie.mp3" type="audio/mp3">
             </audio>
+            <p id="estado-audio" role="status"></p>
             <button type="button" id="reproducirPausar" class='bx bx-play' style='font-size: 24px; color: #6f7180; margin-top: 10px; margin-left: 32px; cursor: pointer' title="Reproducir"></button>
             <button type="button" id="bajarVolumen" class='bx bx-volume-low' style='font-size: 24px; color: #6f7180; margin-top: 10px; cursor:pointer' title="Bajar Volumen"></button>
             <button type="button" id="subirVolumen" class='bx bx-volume-full' style="font-size: 24px; color: #6f7180; margin-top: 10px; cursor: pointer " title="Subir Volumen"></button>
@@ -868,7 +868,7 @@
     const silenciar = document.getElementById('silenciar');
     const reiniciar = document.getElementById('reiniciar');
 
-    var audioPausado = false;
+
 
     var audio;
 
@@ -886,20 +886,6 @@
     //    }
     //});
 
-    window.addEventListener('pageshow', function(event) {
-        if (event.persisted) {
-            // La página se cargó desde la caché
-            audio.play(); // o el estado que necesites
-            //messageElement.textContent = "Mensaje principal";
-        }
-        audio.play(); // o el estado que necesites
-
-    });
-
-    window.onload = function () {
-        window.scrollTo(0, 0);
-    };
-
     document.addEventListener('DOMContentLoaded', function () {
         disableScroll();
         disableFocus();
@@ -911,82 +897,41 @@
 
         audio.volume = 0.60;
 
-        if (audio.paused) {
-            reproducirPausar.title = "Reproducir"
-            //reproducirPausar.src = "https://cdn-icons-png.flaticon.com/512/8104/8104431.png"
-            reproducirPausar.classList.remove('bx-pause')
-            reproducirPausar.classList.add('bx-play')
-        } else {
-            reproducirPausar.title = "Pausar"
-            //reproducirPausar.src = "https://cdn-icons-png.flaticon.com/512/8104/8104379.png"
-            reproducirPausar.classList.add('bx-pause')
-            reproducirPausar.classList.remove('bx-play')
+        const estadoAudio = document.getElementById('estado-audio');
+
+        function actualizarReproductor() {
+            reproducirPausar.title = audio.paused ? 'Reproducir' : 'Pausar';
+            reproducirPausar.classList.toggle('bx-play', audio.paused);
+            reproducirPausar.classList.toggle('bx-pause', !audio.paused);
         }
 
-        document.addEventListener('click', musicPlay);
+        function avisarErrorAudio() {
+            audio.pause();
+            estadoAudio.textContent = 'No se pudo iniciar el audio. Podés reintentarlo con Reproducir.';
+            actualizarReproductor();
+        }
 
-        function musicPlay(event) {
-            if (audio.paused) {
-                if (event.target.id === 'reproducirPausar') {
-                    // No hacer nada si el clic fue en el botón de reproducirPausar
-                    return;
-                }
-                if (event.target.id === 'bajarVolumen') {
-                    // No hacer nada si el clic fue en el botón de bajarVolumen
-                    return;
-                }
-                if (event.target.id === 'subirVolumen') {
-                    // No hacer nada si el clic fue en el botón de subir volumen
-                    return;
-                }
-                if (event.target.id === 'silenciar') {
-                    // No hacer nada si el clic fue en el botón de silenciar
-                    return;
-                }
-                if (event.target.id === 'reiniciar') {
-                    // No hacer nada si el clic fue en el botón de reiniciar
-                    return;
-                }
-
-                audio.play();
-                reproducirPausar.title = "Pausar"
-                //reproducirPausar.src = "https://cdn-icons-png.flaticon.com/512/8104/8104379.png"
-                reproducirPausar.classList.add('bx-pause')
-                reproducirPausar.classList.remove('bx-play')
-
-                document.removeEventListener('click', musicPlay);
+        async function reproducirAudio() {
+            estadoAudio.textContent = '';
+            try {
+                if (audio.error) audio.load();
+                await audio.play();
+            } catch (error) {
+                if (error.name !== 'AbortError') avisarErrorAudio();
             }
         }
 
-        audio.addEventListener('pause', function () {
-            reproducirPausar.title = "Reproducir"
-            //reproducirPausar.src = "https://cdn-icons-png.flaticon.com/512/8104/8104431.png"
-            reproducirPausar.classList.remove('bx-pause')
-            reproducirPausar.classList.add('bx-play')
+        actualizarReproductor();
+        audio.addEventListener('error', avisarErrorAudio);
+        audio.addEventListener('pause', actualizarReproductor);
+        audio.addEventListener('playing', () => {
+            estadoAudio.textContent = '';
+            actualizarReproductor();
         });
-
-        audio.addEventListener('play', function () {
-            reproducirPausar.title = "Pausar"
-            //reproducirPausar.src = "https://cdn-icons-png.flaticon.com/512/8104/8104379.png"
-            reproducirPausar.classList.add('bx-pause')
-            reproducirPausar.classList.remove('bx-play')
-        });
-
-        reproducirPausar.addEventListener('click', function () {
-            if (audio.paused) {
-                audio.play();
-                reproducirPausar.title = "Pausar"
-                //reproducirPausar.src = "https://cdn-icons-png.flaticon.com/512/8104/8104379.png"
-                reproducirPausar.classList.add('bx-pause')
-                reproducirPausar.classList.remove('bx-play')
-            } else {
-                audio.pause();
-                reproducirPausar.title = "Reproducir"
-                //reproducirPausar.src = "https://cdn-icons-png.flaticon.com/512/8104/8104431.png"
-                reproducirPausar.classList.remove('bx-pause')
-                reproducirPausar.classList.add('bx-play')
-                audioPausado = true;
-            }
+        document.getElementById('aceptarBtnBienvenida').addEventListener('click', reproducirAudio, { once: true });
+        reproducirPausar.addEventListener('click', () => {
+            if (audio.paused) reproducirAudio();
+            else audio.pause();
         });
 
         document.getElementById('subirVolumen').addEventListener('click', function () {
@@ -1074,7 +1019,7 @@
             const audio = document.getElementById("miaudio");
             audio.src = canciones[cancionActual];
             audio.load(); // Carga la nueva canción
-            audio.play(); // Reproduce la nueva canción automáticamente
+            reproducirAudio();
         }
     });
 
