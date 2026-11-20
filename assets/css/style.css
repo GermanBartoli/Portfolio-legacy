@@ -136,6 +136,10 @@ h6 {
 }
 
 @media (max-width: 1199px) {
+  body:not(.mobile-nav-active) #header .profile img {
+    display: none;
+  }
+
   #header {
     transition-property: left;
     visibility: hidden;
